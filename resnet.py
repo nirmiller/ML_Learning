@@ -13,7 +13,6 @@ import pandas as pd
 import tensorflow as tf
 
 
-save_path = b"C:\Users\slice\PycharmProjects\ResNetKMS\Model"
 
 #dimensions
 img_height, img_width = (224, 224)

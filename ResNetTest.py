@@ -33,8 +33,6 @@ test_generator = train_datagen.flow_from_directory( valid_data_dir,
                                                      class_mode='categorical',
                                                      subset='validation')
 
-save_path = b"C:\Users\slice\PycharmProjects\ResNetKMS\Model"
-
 model = tf.keras.models.load_model("Model/ResNet_50Flowers")
 
 
