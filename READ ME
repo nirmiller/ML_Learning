@@ -2,3 +2,7 @@ Download the flower repository here
 
 https://www.kaggle.com/alxmamaev/flowers-recognition
 
+make a folder called Flower with all the photos
+and make another empty folder called processed_data
+run filehandler first
+then run resnet, make sure file locations are correct
