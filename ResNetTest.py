@@ -11,29 +11,36 @@ import numpy as np
 import pandas as pd
 import seaborn as sb
 import tensorflow as tf
+
 import os
 
-train_data_dir = r"FlowerDataSet\processed_data\train"
+train_data_dir = r"Dataset\processed_data\train"
 img_height, img_width = (224, 224)
 batch_size = 32
+valid_data_dir = r"DataSet\processed_data\val"
+
 train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input,
                                    shear_range=.2,
                                    zoom_range=.2,
                                    horizontal_flip=True,
                                    validation_split=.4)
-valid_data_dir = r"FlowerDataSet\processed_data\val"
+
 train_generator = train_datagen.flow_from_directory( train_data_dir,
                                                      target_size=(img_height, img_width),
                                                      batch_size=batch_size,
                                                      class_mode='categorical',
                                                      subset='training')
+
 test_generator = train_datagen.flow_from_directory( valid_data_dir,
                                                      target_size=(img_height, img_width),
                                                      batch_size=1,
                                                      class_mode='categorical',
                                                      subset='validation')
 
-model = tf.keras.models.load_model("Model/ResNet_50Flowers")
+
+
+
+model = tf.keras.models.load_model("Model/RestNet_Epoch_1")
 
 
 filenames = test_generator.filenames

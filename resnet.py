@@ -14,14 +14,17 @@ import tensorflow as tf
 
 
 
+
+
+
 #dimensions
 img_height, img_width = (224, 224)
 batch_size = 32
 
 #pre-processing images
-train_data_dir = r"FlowerDataSet\processed_data\train"
-valid_data_dir = r"FlowerDataSet\processed_data\val"
-test_data_dir = r"FlowerDataSet\processed_data\test"
+train_data_dir = r"DataSet\processed_data\train"
+valid_data_dir = r"DataSet\processed_data\val"
+test_data_dir = r"DataSet\processed_data\test"
 
 train_datagen = ImageDataGenerator(preprocessing_function=preprocess_input,
                                    shear_range=.2,
@@ -48,32 +51,34 @@ test_generator = train_datagen.flow_from_directory( valid_data_dir,
                                                      class_mode='categorical',
                                                      subset='validation')
 
-x,y = test_generator.next()
-print(x.shape)
 
-base_model = ResNet50(include_top = False, weights = 'imagenet')
-x = base_model.output
-x = GlobalAveragePooling2D()(x)
-x = Dense(1024, activation='relu')(x)
+def train():
+    x, y = test_generator.next()
+    print(x.shape)
 
-#Number of classes V
-predictions = Dense(train_generator.num_classes, activation='softmax')(x)
-model = Model(inputs=base_model.input, outputs=predictions)
+    base_model = ResNet50(include_top=False, weights='imagenet')
+    x = base_model.output
+    x = GlobalAveragePooling2D()(x)
+    x = Dense(1024, activation='relu')(x)
+
+    # Number of classes V
+    predictions = Dense(train_generator.num_classes, activation='softmax')(x)
+    model = Model(inputs=base_model.input, outputs=predictions)
+
+    for layer in base_model.layers:
+        layer.trainable = False
+
+    # Finale layer
+    model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
+
+    model.fit(train_generator, epochs=5)
+
+    model.save(b'Model\RestNet_Epoch_5')
+
+    # model = load_model(os.path.join(save_path, b'ResNet_50Flowers'))
+
+    test_loss, test_acc = model.evaluate(test_generator, verbose=2)
+    print('\nTest Accuarcy', test_acc)
 
 
-
-for layer in base_model.layers:
-    layer.trainable =False
-
-#Finale layer
-model.compile(optimizer='adam', loss = 'categorical_crossentropy', metrics = ['accuracy'])
-
-model.fit(train_generator, epochs=1)
-
-model.save(b'Model\ResNet_50Flowers')
-
-
-#model = load_model(os.path.join(save_path, b'ResNet_50Flowers'))
-
-test_loss, test_acc = model.evaluate(test_generator, verbose = 2)
-print('\nTest Accuarcy', test_acc)
+train()
