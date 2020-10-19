@@ -42,7 +42,7 @@ print(
     "This image most likely belongs to {} with a {:.2f} percent confidence."
     .format(class_names[index], 100 * np.max(score))
 )
-
+#Stuff
 
 if(index == class_names.__len__()):
     print("Trash")
