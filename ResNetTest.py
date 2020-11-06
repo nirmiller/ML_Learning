@@ -40,7 +40,7 @@ test_generator = train_datagen.flow_from_directory( valid_data_dir,
 
 
 
-model = tf.keras.models.load_model("Model/RestNet_Epoch_1")
+model = tf.keras.models.load_model("Model/RestNet_Epoch_3")
 
 
 filenames = test_generator.filenames

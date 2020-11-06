@@ -14,12 +14,12 @@ import tensorflow as tf
 import os
 from tensorflow import keras
 
-model = tf.keras.models.load_model("Model/RestNet_Epoch_1")
+model = tf.keras.models.load_model("Model/RestNet_Epoch_5")
 
 img_height, img_width = (224, 224)
 batch_size = 32
 
-name = "metalInternet.jpg"
+name = "multi-depth_boxes.jpg"
 
 flower_path = "testimages/{}.".format(name)
 

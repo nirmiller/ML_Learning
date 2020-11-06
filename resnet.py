@@ -71,9 +71,9 @@ def train():
     # Finale layer
     model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
-    model.fit(train_generator, epochs=5)
+    model.fit(train_generator, epochs=1)
 
-    model.save(b'Model\RestNet_Epoch_5')
+    model.save(b'Model\RestNet_Epoch_Test')
 
     # model = load_model(os.path.join(save_path, b'ResNet_50Flowers'))
 
